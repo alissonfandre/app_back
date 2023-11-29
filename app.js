@@ -3,17 +3,26 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 //import do sequelize
 const { Sequelize } = require('sequelize');
+
 //criando a constante sequelize e passando as informações
-const sequelize = require('./db/');
+const sequelize = require('./db');
+
+sequelize.sync();
 
 //models importaçoes
 const Tarefa = require('./models/tarefa');
 
+ const usuario = require('./models/usuario');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var tarefasRouter = require('./routes/tarefasRouter');
+var usuariosRouter = require('./routes/usuariosRouter');
+
 
 var app = express();
 
@@ -29,6 +38,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/tarefas', tarefasRouter);
+app.use('/usuarios', usuariosRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

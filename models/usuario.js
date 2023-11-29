@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require ('../db');
 
-const Tarefa = sequelize.define('Tarefa', {
+const usuario = sequelize.define('usuario', {
   // Model attributes are defined here
   id: {
     type: DataTypes.INTEGER,
@@ -10,37 +10,25 @@ const Tarefa = sequelize.define('Tarefa', {
     primaryKey: true,
   },
 
-  titulo: {
+  nome: {
     type: DataTypes.STRING,
     allowNull: false,
     // allowNull defaults to true
   },
 
-  descricao: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 
-  status: {
+  senha: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-
-  data_criacao: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    // allowNull defaults to true
-  },
-
-  data_limite: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    // allowNull defaults to true
-  }
 }, {
   // Other model options go here
 });
-module.exports = Tarefa
+module.exports = usuario
 
 // `sequelize.define` also returns the model
 //console.log(Tarefa === sequelize.models.Tarefa); // true
