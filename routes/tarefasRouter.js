@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sequelize = require('../db');
+const sequelize = require('../sequelize');
 const tarefa = require('../models/tarefa');
 sequelize.sync();
 
@@ -77,8 +77,8 @@ router.post('/', async (req, res) => {
 
 //PUT Atualiza uma tarefa pelo ID
 router.put('/:id', async (req, res) => {
-    sequelize.query(`UPDATE tarefas SET titulo = ? WHERE idtarefas = ?`,
-        { replacements: [req.body.titulo, req.params.id] }
+    sequelize.query(`UPDATE tarefas SET status = ? WHERE idtarefas = ?`,
+        { replacements: [req.body.status, req.params.id] }
     )
         .then(([results, metadata]) => {
             if (metadata.affectedRows === 0) {

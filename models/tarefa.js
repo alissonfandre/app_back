@@ -1,9 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require ('../db');
+const sequelize = require ('../sequelize');
 
 const Tarefa = sequelize.define('Tarefa', {
   // Model attributes are defined here
-  id: {
+  idtarefas: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
