@@ -2,17 +2,19 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+// var logger = require('morgan');
 var logger = require('morgan');
 const { Sequelize } = require('sequelize');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const sequelize = require('./db');
+const sequelize = require('./sequelize');
 const Tarefa = require('./models/tarefa');
 const usuario = require('./models/usuario');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tarefasRouter = require('./routes/tarefasRouter');
 var usuariosRouter = require('./routes/usuariosRouter');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -33,6 +35,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tarefas', tarefasRouter);
 app.use('/usuarios', usuariosRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

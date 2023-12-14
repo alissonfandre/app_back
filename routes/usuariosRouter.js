@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const sequelize = require('../db');
+const sequelize = require('../sequelize');
 const usuario = require('../models/usuario');
+const bcrypt = require('bcrypt');
 sequelize.sync();  
 
 //GET Retorna usuarios com paginação e ordenação
@@ -45,31 +46,26 @@ router.get('/:id', async (req, res) => {
 
 //POST Cria um usuario
 router.post('/', async (req, res) => {
-    sequelize.query(`INSERT INTO usuarios (
-        nome, 
-        email, 
-        senha
-    ) VALUES (?, ?, ?)`,
-
-    { replacements: [
-        req.body.nome, 
-        req.body.email, 
-        req.body.senha
-    ] 
-    })
-    .then(([results, metadata]) => {
+    try {
+        // Encriptar a senha
+        const senhaEncriptada = await bcrypt.hash(req.body.senha, 10); // 10 é o número de rounds para gerar o salt
+    sequelize.query(`INSERT INTO usuarios (nome, email, senha, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)`, 
+    
+        { replacements: [req.body.nome, req.body.email, senhaEncriptada,new Date(), new Date() ] }
+    )
+    
         res.status(201).json({
             success: true,
-            message: "Tarefa criada com sucesso",
+            message: "usuario criado com sucesso",
         });
-    })
-    .catch((error) => {
+    }catch(error){
         res.status(500).json({
             success: false,
             message: error.message,
         });
-    });
+    }
 });
+
 
 //PUT Atualiza um usuario pelo ID
 router.put('/:id', async (req, res) => {
