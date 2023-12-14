@@ -3,7 +3,7 @@ const router = express.Router();
 const Usuario = require('../models/usuario');
 const sequelize = require('../sequelize');
 
-// POST Login de usuário
+// posttttttt
 const bcrypt = require('bcrypt');
 
 
